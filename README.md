@@ -60,6 +60,98 @@ A minimal, **production-minded** starter you can fork for any new project:
 - **Node 18.18+**
 - **pnpm 9+** (or npm/yarn, but scripts assume pnpm)
 - (Optional) **Firebase CLI** for emulators: `npm i -g firebase-tools`
+- (Optional) **GitHub CLI** for automatic repository creation: `brew install gh` (macOS) or visit [cli.github.com](https://cli.github.com/)
+
+---
+
+## 🚀 Quick Setup (Recommended)
+
+### Option A: Use the Setup Script (Easiest)
+
+We've included an advanced setup script that automates the entire process:
+
+```bash
+# Make the script executable
+chmod +x setup-new-project.sh
+
+# Run the setup script
+./setup-new-project.sh
+```
+
+**What the script does automatically:**
+- ✅ Detects existing Firebase configuration
+- ✅ Creates new GitHub repository (clone) or forks existing one
+- ✅ Sets up git remotes correctly
+- ✅ Creates all necessary `.env.example` files
+- ✅ Installs dependencies
+- ✅ Updates package.json with new project name
+- ✅ Provides step-by-step guidance
+
+**Setup script features:**
+- **Clone vs Fork choice**: Create new repo or maintain connection to original
+- **Smart Firebase detection**: Automatically finds and extracts config values
+- **Interactive prompts**: Guided setup with validation
+- **Automatic dependency installation**: Uses pnpm/yarn/npm based on availability
+- **Environment file creation**: Pre-fills with detected values when possible
+
+### Option B: Manual Setup
+
+If you prefer to set up manually, continue to the next section.
+
+---
+
+## 📋 Setup Script Workflow
+
+When you run `./setup-new-project.sh`, here's what happens:
+
+### 1. **Project Setup Method Selection**
+```
+Choose your project setup method:
+1) Clone from starter pack (creates new repository)
+2) Fork from starter pack (keeps connection to original)
+```
+
+**Clone (Recommended for new projects):**
+- Creates completely new repository
+- Removes git history from starter pack
+- Perfect for starting fresh projects
+
+**Fork:**
+- Maintains connection to original repository
+- Good for contributing back or keeping updates
+
+### 2. **Project Information Collection**
+- GitHub username
+- Starter pack repository name
+- New project name and description
+- Local directory name
+- Repository visibility (private/public/internal)
+
+### 3. **Firebase Configuration**
+The script automatically detects Firebase config files:
+- `firebase.json`
+- `.firebaserc`
+- `firebase.config.js`
+- `firebase.config.json`
+
+**Configuration options:**
+- Use detected configuration (auto-extracts project ID, storage bucket)
+- Enter configuration manually
+- Skip Firebase configuration
+
+### 4. **Automatic Setup Steps**
+- Repository creation (GitHub CLI or manual instructions)
+- Git remote configuration
+- Package.json updates
+- Environment file creation
+- Dependency installation
+- Firebase config cleanup (optional)
+
+### 5. **Final Output**
+- New project directory created
+- All `.env.example` files ready
+- Dependencies installed
+- Clear next steps provided
 
 ---
 
@@ -179,11 +271,76 @@ To add an admin or dashboard later:
 
 ---
 
+## 🔧 Setup Script Troubleshooting
+
+### **Prerequisites Issues**
+```bash
+# If Git is not found
+brew install git  # macOS
+# or visit: https://git-scm.com/
+
+# If GitHub CLI is not found
+brew install gh   # macOS
+# or visit: https://cli.github.com/
+
+# If jq is not found (for Firebase config parsing)
+brew install jq   # macOS
+# or visit: https://stedolan.github.io/jq/
+```
+
+### **Common Script Issues**
+- **Permission denied**: Run `chmod +x setup-new-project.sh`
+- **Directory already exists**: Script will ask to remove or choose different name
+- **GitHub CLI authentication**: Run `gh auth login` before using the script
+- **Firebase config not detected**: Check if config files exist in project root
+
+### **Manual Fallback**
+If the script fails, you can always:
+1. Clone manually: `git clone <your-starter-repo> <new-project-name>`
+2. Create repository on GitHub manually
+3. Follow the manual setup steps below
+
+### **Environment Variables**
+After running the script, you'll have:
+- `apps/web/.env.example` → Copy to `apps/web/.env.local`
+- `apps/api/.env.example` → Copy to `apps/api/.env`
+- `.env.example` → Copy to `.env`
+
+Fill in your actual values in these files.
+
+---
+
 ## Scripts
 
 - `pnpm dev` – run all apps in dev mode
 - `pnpm build` – build all
 - `pnpm seed` – seed Firestore with demo data
+
+---
+
+## 🚀 Quick Start Commands
+
+**For immediate setup:**
+```bash
+# Make script executable and run
+chmod +x setup-new-project.sh && ./setup-new-project.sh
+
+# Or run manually
+chmod +x setup-new-project.sh
+./setup-new-project.sh
+```
+
+**After setup:**
+```bash
+# Navigate to your new project
+cd <your-new-project-name>
+
+# Install dependencies (if not already done)
+pnpm install
+
+# Start development
+pnpm dev
+```
 
 ---
 
